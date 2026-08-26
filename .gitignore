@@ -1,0 +1,25 @@
+### CypressIO ###
+# gitignore template for the CypressIO, browser test framework
+# website: https://www.cypress.io/
+
+# Common node modules locations
+/node_modules
+
+# Vscode
+/.vscode
+
+#Files
+package-lock.json
+yarn.lock
+
+#Cypre config json file
+/cypress.config.json
+
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+reports/
+.env
+.DS_Store
+Thumbs.db
+*.log
