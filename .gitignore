@@ -15,9 +15,12 @@ yarn.lock
 #Cypre config json file
 /cypress.config.json
 
-cypress/screenshots/
-cypress/videos/
-cypress/downloads/
+/cypress/downloads/
+/cypress/files/*
+/cypress/screenshots/
+/cypress/videos/
+/cypress/results
+/cypress/reports
 reports/
 .env
 .DS_Store
