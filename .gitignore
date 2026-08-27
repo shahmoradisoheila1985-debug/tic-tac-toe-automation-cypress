@@ -2,6 +2,15 @@
 # gitignore template for the CypressIO, browser test framework
 # website: https://www.cypress.io/
 
+.idea/
+/cypress/downloads/
+/cypress/files/*
+/cypress/screenshots/
+/cypress/videos/
+/cypress/results
+/cypress/reports
+reports/
+
 # Common node modules locations
 /node_modules
 
@@ -15,13 +24,6 @@ yarn.lock
 #Cypre config json file
 /cypress.config.json
 
-/cypress/downloads/
-/cypress/files/*
-/cypress/screenshots/
-/cypress/videos/
-/cypress/results
-/cypress/reports
-reports/
 .env
 .DS_Store
 Thumbs.db
