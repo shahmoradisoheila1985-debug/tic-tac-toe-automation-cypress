@@ -29,10 +29,3 @@
 Cypress.Commands.add('getByTestId', (testId) => {
     return cy.get(`[data-testid="${testId}"]`)
 })
-
-Cypress.Commands.add('registerUser', (name) => {
-    cy.getByTestId('input-auth-name').clear().type(name)
-    cy.getByTestId('btn-register').click()
-    cy.getByTestId('nav').should('be.visible')
-    cy.getByTestId('nav-hello').should('contain.text', name)
-})

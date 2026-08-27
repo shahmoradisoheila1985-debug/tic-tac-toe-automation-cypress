@@ -1,73 +1,192 @@
 /// <reference types = "cypress"/>
 import RegisterLoginPage from "../page-objects/page-login-register/page-common-features.cy"
+import RegisterPage from "../page-objects/page-login-register/page-register.cy"
+import NavigationBar from "../page-objects/page-navigation/page-navigation-bar.cy"
+import PlayPage from "../page-objects/page-navigation/page-play"
+import LoginPage from "../page-objects/page-login-register/page-login.cy"
 
-const regLgnPg = new RegisterLoginPage()
+const reglgnpg = new RegisterLoginPage()
+const regpg = new RegisterPage()
+const nvBr = new NavigationBar()
+const plypg = new PlayPage()
+const lgnpg = new LoginPage()
+const tictactoeurl = Cypress.env("TICTOCTOEURL")
 
 
-describe('Authentication test cases', () => {
+describe('Authentication test cases for `English` language', () => {
+  let plyrNmVal
+  let errMsgVal
+  const appUrl = tictactoeurl["AppUrl"]
+  const appLang = "English"
+  
   beforeEach(() => {
-    regLgnPg.navigateToTheWelcomePageAndCheckItIsOpened()
+    cy.fixture('player-names.json').then((plyrNm) =>{
+      plyrNmVal = plyrNm
+    })
+    cy.fixture('error-messages.json').then((errMsg) =>{
+      errMsgVal = errMsg
+    })
+    reglgnpg.navigateToTheWelcomePageAndCheckItIsOpened(appUrl)
+    reglgnpg.setApplicationLanguage(appLang)
   })
 
-  it('AUTH-001: registers a user with a valid name', () => {
-    cy.getByTestId('input-auth-name').type('Sara');
-    cy.getByTestId('btn-register').click();
+  it('Validate register a user with a valid name', () => {
+    regpg.enterANameInsidePlayerNameField(plyrNmVal.valid)
+    regpg.clickOnTheCreateAccountButton()
+    nvBr.checkShowNavigationBarSection()
+    nvBr.checkShowRegisteredNameInTheNavigationBarSection(plyrNmVal.valid, appLang)
+    plypg.checkShowPlayBoard()
+  })
 
-    cy.getByTestId('nav').should('be.visible');
+  it('Validate login an unknown user', () => {
+    reglgnpg.clickOnTheSwitchModeButton()
+    lgnpg.checkShowLoginButton()
+    regpg.enterANameInsidePlayerNameField(plyrNmVal.unknown)
+    lgnpg.clickOnTheLoginButton()
+    lgnpg.checkShowLoginButton()
+    lgnpg.validateNoAccountNameErrorMessage(errMsgVal.noAccountNameErrorEn)
+  })
 
-    cy.getByTestId('nav-hello')
-      .should('contain.text', 'Sara');
+  it('Validate empty player name', () => {
+    regpg.clickOnTheCreateAccountButton()
+    regpg.validateEmptyPlayerNameErrorMessageByClickingOnTheCreateAccountButton(errMsgVal.emptyNameErrorEn)
+  })
 
-    cy.getByTestId('board').should('be.visible');
-  });
+  it('Validate successful login by registered a player', () => {
+    regpg.registerAUserByRandomlyPlayerName()
+    nvBr.clickOnTheLogOutButton()
+    reglgnpg.clickOnTheSwitchModeButton()
+    cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
+      regpg.enterANameInsidePlayerNameField(gnrtdPlyrNmVal)
+      lgnpg.clickOnTheLoginButton()
+      nvBr.checkShowRegisteredNameInTheNavigationBarSection(gnrtdPlyrNmVal, appLang)
+    })
+  })
 
-  it('AUTH-002: rejects an empty player name', () => {
-    cy.getByTestId('btn-register').click();
+  it('Validate logs out the authenticated user', () => {
+    regpg.registerAUserByRandomlyPlayerName()
+    nvBr.clickOnTheLogOutButton()
+    regpg.checkShowCreateAccountButton()
+    nvBr.checkNavigationBarSectionNotExist()
+  })
 
-    cy.getByTestId('auth-error').should('be.visible');
-    cy.getByTestId('auth-form').should('be.visible');
-  });
+  it('Validate duplicate player name registration', () => {
+    regpg.registerAUserByRandomlyPlayerName()
+    nvBr.clickOnTheLogOutButton()
+    cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
+      regpg.enterANameInsidePlayerNameField(gnrtdPlyrNmVal)
+    })
+    regpg.clickOnTheCreateAccountButton()
+    regpg.validateDuplicatePlayerNameErrorByClickingOnTheCreateAccountButton(errMsgVal.duplicateNameErrorEn)
+  })
 
-  it('AUTH-003: rejects a one-character player name', () => {
-    cy.getByTestId('input-auth-name').type('S');
-    cy.getByTestId('btn-register').click();
+  it('Validate rejects a one-character player name', () => {
+    regpg.enterANameInsidePlayerNameField(plyrNmVal.short)
+    regpg.clickOnTheCreateAccountButton()
+    regpg.validateAtLeastCharactersNameErrorMessage(errMsgVal.atLeastCharactersErrorEn)
+  })
 
-    cy.getByTestId('auth-error').should('be.visible');
-    cy.getByTestId('auth-form').should('be.visible');
-  });
+  it('Validate preserves the session after page reload', () => {
+    regpg.registerAUserByRandomlyPlayerName()
+    cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
+      nvBr.checkShowRegisteredNameInTheNavigationBarSection(gnrtdPlyrNmVal, appLang)
+    })
+    plypg.checkShowPlayBoard()
+    cy.reload()
+    nvBr.checkShowNavigationBarSection()
+    cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
+      nvBr.checkShowRegisteredNameInTheNavigationBarSection(gnrtdPlyrNmVal, appLang)
+    })
+    plypg.checkShowPlayBoard()
+    reglgnpg.checkAuthenticationFormNotExist()
+  })
+})
 
-  it('AUTH-004: prevents case-insensitive duplicate registration', () => {
-    cy.registerUser('Sara');
+describe('Authentication test cases for `Persian` language', () => {
+  let plyrNmVal
+  let errMsgVal
+  const appUrl = tictactoeurl["AppUrl"]
+  const appLang = "Persian"
+  
+  beforeEach(() => {
+    cy.fixture('player-names.json').then((plyrNm) =>{
+      plyrNmVal = plyrNm
+    })
+    cy.fixture('error-messages.json').then((errMsg) =>{
+      errMsgVal = errMsg
+    })
+    reglgnpg.navigateToTheWelcomePageAndCheckItIsOpened(appUrl)
+    reglgnpg.setApplicationLanguage(appLang)
+  })
 
-    cy.getByTestId('btn-logout').click();
+  it('Validate register a user with a valid name', () => {
+    regpg.enterANameInsidePlayerNameField(plyrNmVal.valid)
+    regpg.clickOnTheCreateAccountButton()
+    nvBr.checkShowNavigationBarSection()
+    nvBr.checkShowRegisteredNameInTheNavigationBarSection(plyrNmVal.valid, appLang)
+    plypg.checkShowPlayBoard()
+  })
 
-    cy.getByTestId('input-auth-name').type('sara');
-    cy.getByTestId('btn-register').click();
+  it('Validate login an unknown user', () => {
+    reglgnpg.clickOnTheSwitchModeButton()
+    lgnpg.checkShowLoginButton()
+    regpg.enterANameInsidePlayerNameField(plyrNmVal.unknown)
+    lgnpg.clickOnTheLoginButton()
+    lgnpg.checkShowLoginButton()
+    lgnpg.validateNoAccountNameErrorMessage(errMsgVal.noAccountNameErrorFa)
+  })
 
-    cy.getByTestId('auth-error').should('be.visible');
-    cy.getByTestId('auth-form').should('be.visible');
-  });
+  it('Validate empty player name', () => {
+    regpg.clickOnTheCreateAccountButton()
+    regpg.validateEmptyPlayerNameErrorMessageByClickingOnTheCreateAccountButton(errMsgVal.emptyNameErrorFa)
+  })
 
-  it('AUTH-005: preserves the session after page reload', () => {
-    cy.registerUser('Sara');
+  it('Validate successful login by registered a player', () => {
+    regpg.registerAUserByRandomlyPlayerName()
+    nvBr.clickOnTheLogOutButton()
+    reglgnpg.clickOnTheSwitchModeButton()
+    cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
+      regpg.enterANameInsidePlayerNameField(gnrtdPlyrNmVal)
+      lgnpg.clickOnTheLoginButton()
+      nvBr.checkShowRegisteredNameInTheNavigationBarSection(gnrtdPlyrNmVal, appLang)
+    })
+  })
 
-    cy.reload();
+  it('Validate logs out the authenticated user', () => {
+    regpg.registerAUserByRandomlyPlayerName()
+    nvBr.clickOnTheLogOutButton()
+    regpg.checkShowCreateAccountButton()
+    nvBr.checkNavigationBarSectionNotExist()
+  })
 
-    cy.getByTestId('nav').should('be.visible');
+  it('Validate duplicate player name registration', () => {
+    regpg.registerAUserByRandomlyPlayerName()
+    nvBr.clickOnTheLogOutButton()
+    cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
+      regpg.enterANameInsidePlayerNameField(gnrtdPlyrNmVal)
+    })
+    regpg.clickOnTheCreateAccountButton()
+    regpg.validateDuplicatePlayerNameErrorByClickingOnTheCreateAccountButton(errMsgVal.duplicateNameErrorFa)
+  })
 
-    cy.getByTestId('nav-hello')
-      .should('contain.text', 'Sara');
+  it('Validate rejects a one-character player name', () => {
+    regpg.enterANameInsidePlayerNameField(plyrNmVal.short)
+    regpg.clickOnTheCreateAccountButton()
+    regpg.validateAtLeastCharactersNameErrorMessage(errMsgVal.atLeastCharactersErrorFa)
+  })
 
-    cy.getByTestId('board').should('be.visible');
-  });
-
-  it('AUTH-006: logs out the authenticated user', () => {
-    cy.registerUser('Sara');
-
-    cy.getByTestId('btn-logout').click();
-
-    cy.getByTestId('auth-form').should('be.visible');
-    cy.getByTestId('nav').should('not.exist');
-    cy.getByTestId('board').should('not.exist');
-  });
-});
+  it('Validate preserves the session after page reload', () => {
+    regpg.registerAUserByRandomlyPlayerName()
+    cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
+      nvBr.checkShowRegisteredNameInTheNavigationBarSection(gnrtdPlyrNmVal, appLang)
+    })
+    plypg.checkShowPlayBoard()
+    cy.reload()
+    nvBr.checkShowNavigationBarSection()
+    cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
+      nvBr.checkShowRegisteredNameInTheNavigationBarSection(gnrtdPlyrNmVal, appLang)
+    })
+    plypg.checkShowPlayBoard()
+    reglgnpg.checkAuthenticationFormNotExist()
+  })
+})

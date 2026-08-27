@@ -1,0 +1,10 @@
+{
+    "emptyNameErrorEn": "Please enter a name.",
+    "emptyNameErrorFa": "لطفاً یک نام وارد کنید.",
+    "duplicateNameErrorEn": "This name is already taken. Try logging in.",
+    "duplicateNameErrorFa": "این نام قبلاً ثبت شده است. وارد شوید.",
+    "noAccountNameErrorEn": "No account with this name. Please register.",
+    "noAccountNameErrorFa": "حسابی با این نام وجود ندارد. ثبت‌نام کنید.",
+    "atLeastCharactersErrorEn": "Name must be at least 2 characters.",
+    "atLeastCharactersErrorFa": "نام باید حداقل ۲ نویسه باشد."
+}
