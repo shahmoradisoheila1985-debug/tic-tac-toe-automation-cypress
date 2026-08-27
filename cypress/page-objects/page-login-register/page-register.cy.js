@@ -1,22 +1,17 @@
 /// <reference types = "cypress"/>
-import RegisterLoginPage from "./page-common-features.cy"
-import NavigationBar from "../page-navigation/page-navigation-bar.cy"
+import RegisterLoginPage from "./page-common-features.cy.js"
+import NavigationBar from "../page-navigation/page-navigation-bar.cy.js"
 
 const reglgnpg = new RegisterLoginPage()
 const nvBr = new NavigationBar()
 
-class RegisterPage{
+class RegisterPage {
 
     elements = {
-        wlcmPgUrl: "/index.html",
-        sectElWlcm: "#root",
+        txtReg: "Register",
         fldElPlyrNm: "input-name",
         btnElCrtAcnt: "btn-register",
         msgElAuthErr: "[data-testid='auth-error']",
-    }
-
-    enterANameInsidePlayerNameField(nmVal){
-        cy.getByTestId(this.elements.fldElPlyrNm).type(nmVal)
     }
 
     checkShowCreateAccountButton(){
@@ -30,7 +25,7 @@ class RegisterPage{
     registerAUserByRandomlyPlayerName(){
         const plyrNmVal = reglgnpg.generateUniquePlayerName()
         cy.writeFile('cypress/files/generatedPlayerNameRandomlyValue.txt', plyrNmVal)
-        this.enterANameInsidePlayerNameField(plyrNmVal)
+        reglgnpg.enterANameInsidePlayerNameField(plyrNmVal)
         this.clickOnTheCreateAccountButton()
         nvBr.checkShowNavigationBarSection()
     }
@@ -46,5 +41,11 @@ class RegisterPage{
     validateAtLeastCharactersNameErrorMessage(atLstCharErrMsg){
         cy.get(this.elements.msgElAuthErr).should('have.text', atLstCharErrMsg)
     }
+
+    // register(plyrNm) {
+    //     reglgnpg.setAuthenticationMode(this.elements.txtReg)
+    //     reglgnpg.enterANameInsidePlayerNameField(plyrNm)
+    //     this.clickOnTheCreateAccountButton()
+    // }
 }
 export default RegisterPage

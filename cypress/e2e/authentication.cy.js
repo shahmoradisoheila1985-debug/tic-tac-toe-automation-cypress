@@ -1,9 +1,9 @@
 /// <reference types = "cypress"/>
-import RegisterLoginPage from "../page-objects/page-login-register/page-common-features.cy"
-import RegisterPage from "../page-objects/page-login-register/page-register.cy"
-import NavigationBar from "../page-objects/page-navigation/page-navigation-bar.cy"
-import PlayPage from "../page-objects/page-navigation/page-play"
-import LoginPage from "../page-objects/page-login-register/page-login.cy"
+import RegisterLoginPage from "../page-objects/page-login-register/page-common-features.cy.js"
+import RegisterPage from "../page-objects/page-login-register/page-register.cy.js"
+import NavigationBar from "../page-objects/page-navigation/page-navigation-bar.cy.js"
+import PlayPage from "../page-objects/page-navigation/page-play.cy.js"
+import LoginPage from "../page-objects/page-login-register/page-login.cy.js"
 
 const reglgnpg = new RegisterLoginPage()
 const regpg = new RegisterPage()
@@ -31,17 +31,17 @@ describe('Authentication test cases for `English` language', () => {
   })
 
   it('Validate register a user with a valid name', () => {
-    regpg.enterANameInsidePlayerNameField(plyrNmVal.valid)
+    reglgnpg.enterANameInsidePlayerNameField(plyrNmVal.valid)
     regpg.clickOnTheCreateAccountButton()
     nvBr.checkShowNavigationBarSection()
     nvBr.checkShowRegisteredNameInTheNavigationBarSection(plyrNmVal.valid, appLang)
-    plypg.checkShowPlayBoard()
+    plypg.checkGameBoardIsDisplayed()
   })
 
   it('Validate login an unknown user', () => {
     reglgnpg.clickOnTheSwitchModeButton()
     lgnpg.checkShowLoginButton()
-    regpg.enterANameInsidePlayerNameField(plyrNmVal.unknown)
+    reglgnpg.enterANameInsidePlayerNameField(plyrNmVal.unknown)
     lgnpg.clickOnTheLoginButton()
     lgnpg.checkShowLoginButton()
     lgnpg.validateNoAccountNameErrorMessage(errMsgVal.noAccountNameErrorEn)
@@ -57,7 +57,7 @@ describe('Authentication test cases for `English` language', () => {
     nvBr.clickOnTheLogOutButton()
     reglgnpg.clickOnTheSwitchModeButton()
     cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
-      regpg.enterANameInsidePlayerNameField(gnrtdPlyrNmVal)
+      reglgnpg.enterANameInsidePlayerNameField(gnrtdPlyrNmVal)
       lgnpg.clickOnTheLoginButton()
       nvBr.checkShowRegisteredNameInTheNavigationBarSection(gnrtdPlyrNmVal, appLang)
     })
@@ -74,14 +74,14 @@ describe('Authentication test cases for `English` language', () => {
     regpg.registerAUserByRandomlyPlayerName()
     nvBr.clickOnTheLogOutButton()
     cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
-      regpg.enterANameInsidePlayerNameField(gnrtdPlyrNmVal)
+      reglgnpg.enterANameInsidePlayerNameField(gnrtdPlyrNmVal)
     })
     regpg.clickOnTheCreateAccountButton()
     regpg.validateDuplicatePlayerNameErrorByClickingOnTheCreateAccountButton(errMsgVal.duplicateNameErrorEn)
   })
 
   it('Validate rejects a one-character player name', () => {
-    regpg.enterANameInsidePlayerNameField(plyrNmVal.short)
+    reglgnpg.enterANameInsidePlayerNameField(plyrNmVal.short)
     regpg.clickOnTheCreateAccountButton()
     regpg.validateAtLeastCharactersNameErrorMessage(errMsgVal.atLeastCharactersErrorEn)
   })
@@ -91,13 +91,13 @@ describe('Authentication test cases for `English` language', () => {
     cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
       nvBr.checkShowRegisteredNameInTheNavigationBarSection(gnrtdPlyrNmVal, appLang)
     })
-    plypg.checkShowPlayBoard()
+    plypg.checkGameBoardIsDisplayed()
     cy.reload()
     nvBr.checkShowNavigationBarSection()
     cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
       nvBr.checkShowRegisteredNameInTheNavigationBarSection(gnrtdPlyrNmVal, appLang)
     })
-    plypg.checkShowPlayBoard()
+    plypg.checkGameBoardIsDisplayed()
     reglgnpg.checkAuthenticationFormNotExist()
   })
 })
@@ -120,17 +120,17 @@ describe('Authentication test cases for `Persian` language', () => {
   })
 
   it('Validate register a user with a valid name', () => {
-    regpg.enterANameInsidePlayerNameField(plyrNmVal.valid)
+    reglgnpg.enterANameInsidePlayerNameField(plyrNmVal.valid)
     regpg.clickOnTheCreateAccountButton()
     nvBr.checkShowNavigationBarSection()
     nvBr.checkShowRegisteredNameInTheNavigationBarSection(plyrNmVal.valid, appLang)
-    plypg.checkShowPlayBoard()
+    plypg.checkGameBoardIsDisplayed()
   })
 
   it('Validate login an unknown user', () => {
     reglgnpg.clickOnTheSwitchModeButton()
     lgnpg.checkShowLoginButton()
-    regpg.enterANameInsidePlayerNameField(plyrNmVal.unknown)
+    reglgnpg.enterANameInsidePlayerNameField(plyrNmVal.unknown)
     lgnpg.clickOnTheLoginButton()
     lgnpg.checkShowLoginButton()
     lgnpg.validateNoAccountNameErrorMessage(errMsgVal.noAccountNameErrorFa)
@@ -146,7 +146,7 @@ describe('Authentication test cases for `Persian` language', () => {
     nvBr.clickOnTheLogOutButton()
     reglgnpg.clickOnTheSwitchModeButton()
     cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
-      regpg.enterANameInsidePlayerNameField(gnrtdPlyrNmVal)
+      reglgnpg.enterANameInsidePlayerNameField(gnrtdPlyrNmVal)
       lgnpg.clickOnTheLoginButton()
       nvBr.checkShowRegisteredNameInTheNavigationBarSection(gnrtdPlyrNmVal, appLang)
     })
@@ -163,14 +163,14 @@ describe('Authentication test cases for `Persian` language', () => {
     regpg.registerAUserByRandomlyPlayerName()
     nvBr.clickOnTheLogOutButton()
     cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
-      regpg.enterANameInsidePlayerNameField(gnrtdPlyrNmVal)
+      reglgnpg.enterANameInsidePlayerNameField(gnrtdPlyrNmVal)
     })
     regpg.clickOnTheCreateAccountButton()
     regpg.validateDuplicatePlayerNameErrorByClickingOnTheCreateAccountButton(errMsgVal.duplicateNameErrorFa)
   })
 
   it('Validate rejects a one-character player name', () => {
-    regpg.enterANameInsidePlayerNameField(plyrNmVal.short)
+    reglgnpg.enterANameInsidePlayerNameField(plyrNmVal.short)
     regpg.clickOnTheCreateAccountButton()
     regpg.validateAtLeastCharactersNameErrorMessage(errMsgVal.atLeastCharactersErrorFa)
   })
@@ -180,13 +180,13 @@ describe('Authentication test cases for `Persian` language', () => {
     cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
       nvBr.checkShowRegisteredNameInTheNavigationBarSection(gnrtdPlyrNmVal, appLang)
     })
-    plypg.checkShowPlayBoard()
+    plypg.checkGameBoardIsDisplayed()
     cy.reload()
     nvBr.checkShowNavigationBarSection()
     cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
       nvBr.checkShowRegisteredNameInTheNavigationBarSection(gnrtdPlyrNmVal, appLang)
     })
-    plypg.checkShowPlayBoard()
+    plypg.checkGameBoardIsDisplayed()
     reglgnpg.checkAuthenticationFormNotExist()
   })
 })
