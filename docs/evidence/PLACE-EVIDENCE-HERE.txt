@@ -1,0 +1,1 @@
+Place screenshots and videos here. Use names referenced in docs/bug-reports.md, or update the report links to match your actual filenames.

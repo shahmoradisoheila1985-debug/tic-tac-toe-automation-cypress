@@ -70,11 +70,22 @@ describe('Authentication test cases for `English` language', () => {
     nvBr.checkNavigationBarSectionNotExist()
   })
 
-  it('Validate duplicate player name registration', () => {
+  it('Validate a duplicate player name registration', () => {
     regpg.registerAUserByRandomlyPlayerName()
     nvBr.clickOnTheLogOutButton()
     cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
       reglgnpg.enterANameInsidePlayerNameField(gnrtdPlyrNmVal)
+    })
+    regpg.clickOnTheCreateAccountButton()
+    regpg.validateDuplicatePlayerNameErrorByClickingOnTheCreateAccountButton(errMsgVal.duplicateNameErrorEn)
+  })
+
+  it('Validate a a case-insensitive duplicate player name registration', () => {
+    regpg.registerAUserByRandomlyPlayerName()
+    nvBr.clickOnTheLogOutButton()
+    cy.readFile('cypress/files/generatedPlayerNameRandomlyValue.txt').then((gnrtdPlyrNmVal) =>{
+      
+      reglgnpg.enterANameInsidePlayerNameField(gnrtdPlyrNmVal.toUpperCase())
     })
     regpg.clickOnTheCreateAccountButton()
     regpg.validateDuplicatePlayerNameErrorByClickingOnTheCreateAccountButton(errMsgVal.duplicateNameErrorEn)
