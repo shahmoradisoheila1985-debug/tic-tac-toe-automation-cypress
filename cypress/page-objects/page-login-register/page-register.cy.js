@@ -41,11 +41,5 @@ class RegisterPage {
     validateAtLeastCharactersNameErrorMessage(atLstCharErrMsg){
         cy.get(this.elements.msgElAuthErr).should('have.text', atLstCharErrMsg)
     }
-
-    // register(plyrNm) {
-    //     reglgnpg.setAuthenticationMode(this.elements.txtReg)
-    //     reglgnpg.enterANameInsidePlayerNameField(plyrNm)
-    //     this.clickOnTheCreateAccountButton()
-    // }
 }
 export default RegisterPage

@@ -214,5 +214,19 @@ class PlayPage{
     validateHistoryDifficulty(recIndx, expdDiffic) {
         cy.getByTestId(`history-difficulty-${recIndx}`).should('contain.text', expdDiffic)
     }
+
+    completeDeterministicPlayerWin() {
+        this.selectDifficulty('easy')
+        // Player X: cell 0 — Computer O: cell 1
+        this.selectCell(0)
+        this.validateNumberOfCellsWithState('o', 1)
+        // Player X: cell 3 — Computer O: cell 2
+        this.selectCell(3)
+        this.validateNumberOfCellsWithState('o', 2)
+        // Player X: cell 6 — Player wins
+        this.selectCell(6)
+        this.validatePlayerWinStatus()
+        this.validateWinningCells([0, 3, 6])
+    }
 }
 export default PlayPage

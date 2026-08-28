@@ -23,11 +23,5 @@ class LoginPage {
     validateNoAccountNameErrorMessage(nAcntNmErrMsg){
         cy.get(this.elements.msgElAuthErr).should('have.text', nAcntNmErrMsg)
     }
-
-    // login(plyrNm) {
-    //     reglgnpg.setAuthenticationMode(this.elements.txtLgn)
-    //     cy.getByTestId(this.elements.inptPlyrNm).clear().type(plyrNm)
-    //     cy.getByTestId(this.elements.btnElLgn).click()
-    // }
 }
 export default LoginPage
