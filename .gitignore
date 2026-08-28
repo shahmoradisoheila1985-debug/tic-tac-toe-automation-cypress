@@ -9,9 +9,11 @@
 /cypress/videos/
 /cypress/results
 /cypress/reports
-reports/
+/reports
+/coverage
 
 .env
+.env.*
 .DS_Store
 Thumbs.db
 *.log
@@ -26,5 +28,3 @@ Thumbs.db
 package-lock.json
 yarn.lock
 
-#Cypre config json file
-/cypress.config.json

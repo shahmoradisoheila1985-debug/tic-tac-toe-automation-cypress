@@ -8,8 +8,8 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "cy:run:chrome": "cypress run --browser chrome",
-    "test:e2e": "start-server-and-test start http://127.0.0.1:3000/index.html cy:run",
-    "test:e2e:chrome": "start-server-and-test start http://127.0.0.1:3000 cy:run:chrome"
+    "tictactoe:e2e": "start-server-and-test start http://127.0.0.1:3000/index.html cy:run",
+    "tictactoe:e2e:chrome": "start-server-and-test start http://127.0.0.1:3000/index.html cy:run:chrome"
   },
   "keywords": [],
   "author": "",
