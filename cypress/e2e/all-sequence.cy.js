@@ -1,0 +1,5 @@
+import "./1.authentication.cy"
+import "./2.gameplay.cy"
+import "./3.profile.cy"
+import "./4.history.cy"
+import "./5.settings.cy"
