@@ -39,7 +39,7 @@
 | GAME-011 | P1 | Cancel an active-game difficulty change | The current board state and previously selected difficulty remain unchanged | Manual | — | — |
 | GAME-012 | P1 | Confirm an active-game difficulty change | The new difficulty is applied and the active board is reset | Manual | — | — |
 | GAME-013 | P1 | Log out and log in after changing difficulty | The saved difficulty is restored for the same player | Manual | — | — |
-| GAME-014 | P0 | Continue playing after sequential difficulty and session changes | X and O ownership remains valid throughout the game | Manual Investigation | — | BUG-009 |
+| GAME-014 | P0 | Continue playing after sequential difficulty and session changes | X and O ownership remains valid throughout the game | Manual Investigation | — | BUG-008|
 | GAME-015 | P0 | Record a completed player win exactly once | One Win record with the correct difficulty and a non-empty date is stored and remains unique after navigation and reload | Automated | English | — |
 
 ## Profile
