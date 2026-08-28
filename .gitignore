@@ -5,8 +5,6 @@
 .idea/
 /cypress/downloads/
 /cypress/files/*
-/cypress/screenshots/
-/cypress/videos/
 /cypress/results
 /cypress/reports
 /reports
